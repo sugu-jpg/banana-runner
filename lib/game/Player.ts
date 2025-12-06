@@ -20,6 +20,10 @@ export class Player implements Rect {
     this.x = x;
     this.y = y;
 
+    if (typeof window !== 'undefined') {
+      this.image = new Image();
+      this.image.src = '/player.png';
+    }
   }
 
   public update(dt: number, input: Input, level: Level) {

@@ -18,6 +18,10 @@ export class Enemy implements Rect {
     this.y = y;
     this.startX = x;
 
+    if (typeof window !== 'undefined') {
+      this.image = new Image();
+      this.image.src = '/enemy.png';
+    }
   }
 
   public update(dt: number, level: Level) {
