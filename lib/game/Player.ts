@@ -21,8 +21,11 @@ export class Player implements Rect {
     this.y = y;
 
     if (typeof window !== 'undefined') {
+      console.log('Loading player image...');
       this.image = new Image();
       this.image.src = '/player.png';
+      this.image.onload = () => console.log('Player image loaded');
+      this.image.onerror = (e) => console.error('Player image failed to load', e);
     }
   }
 
@@ -98,11 +101,11 @@ export class Player implements Rect {
   }
 
   public draw(ctx: CanvasRenderingContext2D, cameraX: number) {
-    if (this.image && this.image.complete) {
+    if (this.image && this.image.complete && this.image.naturalWidth > 0) {
       ctx.drawImage(this.image, this.x - cameraX, this.y, this.width, this.height);
     } else {
       // Fallback
-      ctx.fillStyle = '#FACC15'; // Yellow
+      ctx.fillStyle = '#3B82F6'; // Blue (Debug color)
       ctx.fillRect(this.x - cameraX, this.y, this.width, this.height);
     }
   }

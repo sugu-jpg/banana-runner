@@ -19,8 +19,11 @@ export class Enemy implements Rect {
     this.startX = x;
 
     if (typeof window !== 'undefined') {
+      console.log('Loading enemy image...');
       this.image = new Image();
       this.image.src = '/enemy.png';
+      this.image.onload = () => console.log('Enemy image loaded');
+      this.image.onerror = (e) => console.error('Enemy image failed to load', e);
     }
   }
 
@@ -77,11 +80,11 @@ export class Enemy implements Rect {
   }
 
   public draw(ctx: CanvasRenderingContext2D, cameraX: number) {
-    if (this.image && this.image.complete) {
+    if (this.image && this.image.complete && this.image.naturalWidth > 0) {
       ctx.drawImage(this.image, this.x - cameraX, this.y, this.width, this.height);
     } else {
       // Fallback
-      ctx.fillStyle = '#DC2626'; // Red
+      ctx.fillStyle = '#9333EA'; // Purple (Debug color)
       ctx.fillRect(this.x - cameraX, this.y, this.width, this.height);
     }
   }
